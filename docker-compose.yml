@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  drone-client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: drone-client
+    restart: on-failure
+    ports:
+      - "${DRONE_CLIENT_HTTP_PORT}:${DRONE_CLIENT_HTTP_PORT}"   # HTTP + Swagger
+      - "${DRONE_CLIENT_GRPC_PORT}:${DRONE_CLIENT_GRPC_PORT}" # gRPC
+    env_file:
+      - .env

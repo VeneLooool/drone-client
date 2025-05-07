@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package drone_client.api.v1.drones;
+
+option go_package = "github.com/VeneLooool/drone-client/pkg/api/v1/drones;drones";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service Drones {
+  rpc StartDroneMission(StartDroneMission.Request) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/drones/{id}/mission"
+      body: "*"
+    };
+  }
+}
+
+message Coordinate {
+  float latitude = 1;
+  float longitude = 2;
+}
+
+message Mission {
+  repeated Coordinate coordinates = 1;
+}
+
+message StartDroneMission {
+  message Request {
+    uint64 id = 1;
+    Mission mission = 2;
+  }
+}
